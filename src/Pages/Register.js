@@ -81,7 +81,7 @@ const Register = () => {
                       <Form.Label className="text-left">Email</Form.Label>
                     </Form.FloatingLabel>
                   </Form.Group>
-                  <Form.Group className="m-2" controlId="formBasicEmail">
+                  <Form.Group className="m-2" controlId="formBasicPassword">
                     <Form.FloatingLabel className="form-floating form-floating-sm">
                       <Form.Control
                         className="form-control "
@@ -95,7 +95,7 @@ const Register = () => {
                       <Form.Label className="text-left">Password</Form.Label>
                     </Form.FloatingLabel>
                   </Form.Group>
-                  <Form.Group className="mx-2" controlId="formBasicEmail">
+                  <Form.Group className="mx-2" controlId="formBasicConfirmPassword">
                     <Form.FloatingLabel className="form-floating form-floating-sm">
                       <Form.Control
                         className="form-control "

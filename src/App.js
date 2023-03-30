@@ -1,13 +1,36 @@
-import './App.css';
-import NavBar from './components/NavBar';
-import Register from './Pages/Register';
+import "./App.css";
+import NavBar from "./components/NavBar";
+import Login from "./Pages/Login";
+import Register from "./Pages/Register";
+import {
+  BrowserRouter as Routes,
+  Switch,
+  Route,
+  Link,
+  Redirect,
+} from "react-router-dom";
+import RootLayout from "./components/RootLayout";
+import Home from "./Pages/Home";
+import ErrorPage from "./Pages/ErrorPage";
 
 function App() {
   return (
-    <div className="">
-      <NavBar />
-      <Register />
-    </div>
+    <RootLayout>
+      <Switch>
+        <Route path="/" exact>
+          <Home />
+        </Route>
+        <Route path="/login">
+          <Login />
+        </Route>
+        <Route path="/signUp">
+          <Register />
+        </Route>
+        <Route path="*">
+          <ErrorPage />
+        </Route>
+      </Switch>
+    </RootLayout>
   );
 }
 
