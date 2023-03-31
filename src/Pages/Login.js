@@ -1,12 +1,5 @@
 import React, { useState } from "react";
-import {
-  Button,
-  Card,
-  Col,
-  Container,
-  Form,
-  Row,
-} from "react-bootstrap";
+import { Button, Card, Col, Container, Form, Row } from "react-bootstrap";
 import { useDispatch } from "react-redux";
 import { useHistory } from "react-router-dom";
 import { authAction } from "../redux/redux-store";
@@ -17,13 +10,13 @@ const Login = () => {
     password: "",
     confirmPassword: "",
   });
-  const dispatch = useDispatch()
+  const dispatch = useDispatch();
   const inputchangeHandler = (event) => {
     const inputObj = { ...input, [event.target.name]: event.target.value };
     setInput(inputObj);
   };
 
-  const history = useHistory()
+  const history = useHistory();
   const formSubmitHandler = async (event) => {
     event.preventDefault();
     try {
@@ -45,10 +38,10 @@ const Login = () => {
       if (!response.ok) {
         throw new Error("Authentication Failed");
       }
-      const data = await response.json()
-      console.log(data.idToken)
-      history.replace('/')
-      dispatch(authAction.login(data.idToken))
+      const data = await response.json();
+      console.log(data.email);
+      history.replace("/");
+      dispatch(authAction.login({ idToken: data.idToken, email: data.email }));
     } catch (error) {
       alert(error);
     }

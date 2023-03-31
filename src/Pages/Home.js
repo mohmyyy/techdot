@@ -1,9 +1,13 @@
+import { Container } from "react-bootstrap";
+import SendMail from "../components/SendMail";
 const Home = () => {
   return (
     <>
-    Welcome to the Mail Box
+      <Container>
+        <SendMail />
+      </Container>
     </>
-  )
-}
+  );
+};
 
-export default Home
+export default Home;

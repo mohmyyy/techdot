@@ -1,11 +1,13 @@
 import { createSlice } from "@reduxjs/toolkit";
 
-const checkLS = localStorage.getItem("token");
-const isPresent = !!checkLS;
+const checkForToken = localStorage.getItem("token");
+const checkForEMail = localStorage.getItem("email");
+const isPresent = !!checkForToken;
 
 const initialAUthState = {
-  token: checkLS,
+  token: checkForToken,
   isToken: isPresent,
+  email: checkForEMail,
 };
 
 const authSlice = createSlice({
@@ -13,14 +15,18 @@ const authSlice = createSlice({
   initialState: initialAUthState,
   reducers: {
     login(state, action) {
-      state.token = action.payload;
+      const userEmailId = action.payload.email.replace(/[^a-zA-Z0-9 ]/g, "");
+      state.email = userEmailId
+      state.token = action.payload.idToken;
       state.isToken = true;
-      localStorage.setItem("token", action.payload);
+      localStorage.setItem("token", action.payload.idToken);
+      localStorage.setItem("email", userEmailId);
     },
     Logout(state) {
       state.token = "";
       state.isToken = false;
       localStorage.removeItem("token");
+      localStorage.removeItem("email");
     },
   },
 });
