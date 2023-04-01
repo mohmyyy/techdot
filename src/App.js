@@ -12,6 +12,7 @@ import {
 import RootLayout from "./components/RootLayout";
 import Home from "./Pages/Home";
 import ErrorPage from "./Pages/ErrorPage";
+import Inbox from "./components/Inbox";
 
 
 function App() {
@@ -26,6 +27,9 @@ function App() {
         </Route>
         <Route path="/signUp">
           <Register />
+        </Route>
+        <Route path="/inbox">
+          <Inbox />
         </Route>
         <Route path="*">
           <ErrorPage />

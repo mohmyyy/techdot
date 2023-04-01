@@ -1,5 +1,5 @@
 import { useMemo, useRef, useState } from "react";
-import { Button, Col, Form, Row } from "react-bootstrap";
+import { Button, Card, Col, Form, Row } from "react-bootstrap";
 import JoditEditor from "jodit-react";
 import classes from "./SendMail.css";
 import { useSelector } from "react-redux";
@@ -18,6 +18,8 @@ const SendMail = () => {
   const [content, setContent] = useState();
   const editor = useRef(null);
 
+  const time = new Date();
+
   const inputValuesHandler = (event) => {
     setInputValues({ ...inputValues, [event.target.name]: event.target.value });
   };
@@ -33,6 +35,7 @@ const SendMail = () => {
             to: inputValues.email,
             title: inputValues.testMail,
             body: inputValues.body,
+            time: `${time.getHours()}/${time.getMinutes()}/${time.getTimezoneOffset()}`,
           }),
           headers: {
             "content-type": "application/json",
@@ -45,45 +48,40 @@ const SendMail = () => {
   };
 
   return (
-    <div
-      className="p-1"
-      style={{ display: "flex", justifyContent: "center", marginTop: "50px" }}
-    >
-      <Col md={7} lg={6} xl={6}>
-        <Form className="p-3 border ">
-          <Form.Group className="mb-3">
-            <Form.Control
-              onChange={inputValuesHandler}
-              type="email"
-              name="email"
-              value={inputValues.email}
-              placeholder="To"
-            />
-          </Form.Group>
-          <Form.Group className="mb-3">
-            <Form.Control
-              type="email"
-              name="testMail"
-              onChange={inputValuesHandler}
-              value={inputValues.testMail}
-              placeholder="Test Mail"
-            />
-          </Form.Group>
-          <Form.Group className="mb-3">
-            <JoditEditor
-              ref={editor}
-              value={inputValues.body}
-              tabIndex={300} // tabIndex of textarea
-              onChange={(newContent) =>
-                setInputValues({ ...inputValues, body: newContent })
-              }
-              className="sendMail"
-            />
-          </Form.Group>
-          <Button onClick={mailSubmitHandler}>Send</Button>
-        </Form>
-      </Col>
-    </div>
+    <Card>
+      <Form className="p-3 border ">
+        <Form.Group className="mb-3">
+          <Form.Control
+            onChange={inputValuesHandler}
+            type="email"
+            name="email"
+            value={inputValues.email}
+            placeholder="To"
+          />
+        </Form.Group>
+        <Form.Group className="mb-3">
+          <Form.Control
+            type="email"
+            name="testMail"
+            onChange={inputValuesHandler}
+            value={inputValues.testMail}
+            placeholder="Test Mail"
+          />
+        </Form.Group>
+        <Form.Group className="mb-3">
+          <JoditEditor
+            ref={editor}
+            value={inputValues.body}
+            tabIndex={300} // tabIndex of textarea
+            onChange={(newContent) =>
+              setInputValues({ ...inputValues, body: newContent })
+            }
+            className="sendMail"
+          />
+        </Form.Group>
+        <Button onClick={mailSubmitHandler}>Send</Button>
+      </Form>
+    </Card>
   );
 };
 
