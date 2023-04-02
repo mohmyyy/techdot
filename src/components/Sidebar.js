@@ -9,9 +9,17 @@ import {
 } from "cdbreact";
 import { NavLink } from "react-router-dom";
 import SendOutlinedIcon from "@mui/icons-material/SendOutlined";
-import { Col, Row } from "react-bootstrap";
+import { Badge, Col, Row } from "react-bootstrap";
 import SendMail from "./SendMail";
+import { useSelector } from "react-redux";
 const Sidebar = () => {
+  const email = useSelector((state) => state.auth.email);
+  const mails = useSelector((state) => state.mail.allMails);
+  const filteredEmail = mails.filter((mail) => mail.to === email);
+  const unread = filteredEmail.filter((mail) => mail.read === false);
+  console.log(unread.length);
+  console.log(filteredEmail);
+  console.log(filteredEmail.length);
   return (
     <div
       style={{
@@ -34,12 +42,13 @@ const Sidebar = () => {
         <CDBSidebarContent className="sidebar-content">
           <CDBSidebarMenu>
             <NavLink exact to="/Inbox" activeClassName="activeClicked">
-              <CDBSidebarMenuItem icon="user">Inbox</CDBSidebarMenuItem>
+              <CDBSidebarMenuItem icon="user">
+                Inbox
+                {<Badge className="m-4" bg="secondary">{unread.length}</Badge>}
+              </CDBSidebarMenuItem>
             </NavLink>
             <NavLink exact to="/" activeClassName="activeClicked">
-              <CDBSidebarMenuItem icon="columns">
-                Unread
-              </CDBSidebarMenuItem>
+              <CDBSidebarMenuItem icon="columns">Compose</CDBSidebarMenuItem>
             </NavLink>
             <NavLink exact to="/tables" activeClassName="activeClicked">
               <CDBSidebarMenuItem icon="table">Sent</CDBSidebarMenuItem>

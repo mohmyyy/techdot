@@ -10,17 +10,20 @@ const initialAUthState = {
   email: checkForEMail,
 };
 
+console.log(checkForEMail)
+
 const authSlice = createSlice({
   name: "AuthStore",
   initialState: initialAUthState,
   reducers: {
     login(state, action) {
-      const userEmailId = action.payload.email.replace(/[^a-zA-Z0-9 ]/g, "");
-      state.email = userEmailId
+      // const userEmailId = action.payload.email.replace(/[^a-zA-Z0-9 ]/g, "");
+      // state.email = userEmailId
       state.token = action.payload.idToken;
+      state.email = action.payload.email;
       state.isToken = true;
       localStorage.setItem("token", action.payload.idToken);
-      localStorage.setItem("email", userEmailId);
+      localStorage.setItem("email", state.email);
     },
     Logout(state) {
       state.token = "";

@@ -1,58 +1,22 @@
 import React, { useEffect, useState } from "react";
-import { Table } from "react-bootstrap";
-import { useSelector } from "react-redux";
-import CheckBoxOutlineBlankOutlinedIcon from "@mui/icons-material/CheckBoxOutlineBlankOutlined";
-import CheckBoxOutlinedIcon from "@mui/icons-material/CheckBoxOutlined";
+import { useDispatch, useSelector } from "react-redux";
+import MarkEmailUnreadOutlinedIcon from "@mui/icons-material/MarkEmailUnreadOutlined";
+import MarkEmailReadOutlinedIcon from "@mui/icons-material/MarkEmailReadOutlined";
+import Mails from "./Mails";
+import { getData } from "../redux/redux-mails";
 
 const Inbox = () => {
-  const [fetchData, setFetchData] = useState([]);
-  const email = useSelector((state) => state.email);
-  const [box, setBox] = useState(<CheckBoxOutlineBlankOutlinedIcon />);
+  // const [fetchData, setFetchData] = useState([]);
+  const email = useSelector((state) => state.auth.email);
+  // const [read, unread] = useState(<MarkEmailUnreadOutlinedIcon />);
+  // const dispatch = useDispatch();
 
-  useEffect(() => {
-    const asyncFun = async () => {
-      const response = await fetch(
-        `https://techdot-messenger-default-rtdb.firebaseio.com/mails/${email}.json`
-      );
-      const data = await response.json();
-      if (!response.ok) {
-        throw new Error(data.error.message);
-      }
-      const fetchedData = [];
-      for (const keys in data) {
-        const fetchedObj = {
-          key: keys,
-          ...data[keys],
-        };
-        fetchedData.push(fetchedObj);
-      }
-      setFetchData(() => fetchedData);
-    };
-    try {
-      asyncFun();
-    } catch (error) {
-      alert(error);
-    }
-  }, []);
+  const mails = useSelector((state) => state.mail.allMails);
+  console.log(mails);
+  const filteredMails = mails.filter((mail) => mail.to === email);
+  console.log(filteredMails);
 
-  console.log(fetchData);
-
-  return (
-    <div className="mt-5">
-      <Table striped bordered hover variant="dark">
-        {fetchData.map((mail) => (
-          <tbody>
-            <tr key={mail.key}>
-              <td>{box}</td>
-              <td>{mail.from}</td>
-              <td>{mail.title}</td>
-              <td>{mail.time}</td>
-            </tr>
-          </tbody>
-        ))}
-      </Table>
-    </div>
-  );
+  return <Mails data={filteredMails} />;
 };
 
 export default Inbox;

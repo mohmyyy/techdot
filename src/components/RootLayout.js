@@ -11,7 +11,12 @@ const RootLayout = (props) => {
         <Col className="bg-dark" sm={2} md={3} lg={3}>
           <Sidebar />
         </Col>
-        <Col className="bg-dark" sm={10} md={8} lg={9}>
+        <Col
+          className="bg-dark"
+          sm={10}
+          md={8}
+          lg={9}
+        >
           {props.children}
         </Col>
       </Row>
