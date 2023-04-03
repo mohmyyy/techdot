@@ -1,7 +1,11 @@
 import { Button, Table } from "react-bootstrap";
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 
 const Mails = (props) => {
+  const location = useLocation();
+
+  const pathName = location.pathname === "/inbox";
+
   const mailDeleteHandler = async (id) => {
     const response = await fetch(
       `https://techdot-messenger-default-rtdb.firebaseio.com/mails/${id}.json`,
@@ -22,7 +26,7 @@ const Mails = (props) => {
           {props.data.map((mail) => (
             <tr key={mail.key}>
               <td>
-                {!mail.read && (
+                {!mail.read && pathName && (
                   <div
                     style={{
                       color: "blue",
@@ -38,9 +42,9 @@ const Mails = (props) => {
               <td>
                 <Link
                   style={{ textDecoration: "none", color: "white" }}
-                  to={`/inbox/${mail.key}`}
+                  to={pathName ? `/inbox/${mail.key}` : `/sent/${mail.key}`}
                 >
-                  {mail.from}{" "}
+                  {pathName ? mail.from : mail.to}
                 </Link>
               </td>
 

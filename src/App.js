@@ -17,6 +17,7 @@ import MailDetails from "./components/MailDetails";
 import { useDispatch, useSelector } from "react-redux";
 import { getData, putData } from "./redux/redux-mails";
 import { useEffect } from "react";
+import SentMail from "./components/SentMail";
 
 function App() {
   const dispatch = useDispatch();
@@ -46,6 +47,12 @@ function App() {
           <Inbox />
         </Route>
         <Route path="/inbox/:inboxId">
+          <MailDetails />
+        </Route>
+        <Route path="/sent" exact>
+          <SentMail />
+        </Route>
+        <Route path="/sent/:sendId">
           <MailDetails />
         </Route>
         <Route path="*">

@@ -1,18 +1,23 @@
 import React, { useEffect } from "react";
 import { Card } from "react-bootstrap";
 import { useSelector } from "react-redux";
-import { useParams } from "react-router-dom";
+import { useLocation, useParams } from "react-router-dom";
 
 const MailDetails = () => {
   const params = useParams();
+  console.log(params.sendId);
   console.log(params.inboxId);
+  // const path = params.sendId ? undefined : params.inboxId;
+  let path;
+  if(params.sendId==='undefined'){
+    
+  }
+  console.log(path);
+
   const mails = useSelector((state) => state.mail.allMails);
   console.log(mails);
   const mail = mails.find((mail) => mail.key === params.inboxId);
   console.log(mail);
-  // const mail = `${
-  //   mails ? mails.find((mail) => mail.key === params.inboxId) : {}
-  // }`;
 
   useEffect(() => {
     const putFunction = async () => {

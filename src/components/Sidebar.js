@@ -41,7 +41,7 @@ const Sidebar = () => {
         </CDBSidebarHeader>
         <CDBSidebarContent className="sidebar-content">
           <CDBSidebarMenu>
-            <NavLink exact to="/Inbox" activeClassName="activeClicked">
+            <NavLink exact to="/inbox" activeClassName="activeClicked">
               <CDBSidebarMenuItem icon="user">
                 Inbox
                 {<Badge className="m-4" bg="secondary">{unread.length}</Badge>}
@@ -50,7 +50,7 @@ const Sidebar = () => {
             <NavLink exact to="/" activeClassName="activeClicked">
               <CDBSidebarMenuItem icon="columns">Compose</CDBSidebarMenuItem>
             </NavLink>
-            <NavLink exact to="/tables" activeClassName="activeClicked">
+            <NavLink exact to="/sent" activeClassName="activeClicked">
               <CDBSidebarMenuItem icon="table">Sent</CDBSidebarMenuItem>
             </NavLink>
             <NavLink exact to="/analytics" activeClassName="activeClicked">
