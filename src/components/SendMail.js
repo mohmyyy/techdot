@@ -40,9 +40,6 @@ const SendMail = () => {
           body: JSON.stringify({
             ...inputValues,
             from: email,
-            // to: inputValues.to,
-            // title: inputValues.title,
-            // body: inputValues.body,
             time: `${time.getHours()}/${time.getMinutes()}/${time.getTimezoneOffset()}`,
             read: false,
           }),

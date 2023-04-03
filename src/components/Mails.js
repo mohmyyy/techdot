@@ -1,7 +1,19 @@
-import { Table } from "react-bootstrap";
+import { Button, Table } from "react-bootstrap";
 import { Link } from "react-router-dom";
 
 const Mails = (props) => {
+  const mailDeleteHandler = async (id) => {
+    const response = await fetch(
+      `https://techdot-messenger-default-rtdb.firebaseio.com/mails/${id}.json`,
+      {
+        method: "Delete",
+        headers: {
+          "content-type": "application/json",
+        },
+      }
+    );
+    // console.log(id);
+  };
   console.log(props);
   return (
     <div className="mt-5">
@@ -34,6 +46,11 @@ const Mails = (props) => {
 
               <td>{mail.title}</td>
               <td>{mail.time}</td>
+              <td>
+                <Button onClick={() => mailDeleteHandler(mail.key)}>
+                  Delete Mail
+                </Button>
+              </td>
             </tr>
           ))}
         </tbody>
