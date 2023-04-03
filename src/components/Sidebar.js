@@ -1,13 +1,8 @@
 import React from "react";
-import {
-  CDBSidebar,
-  CDBSidebarContent,
-  CDBSidebarFooter,
-  CDBSidebarHeader,
-  CDBSidebarMenu,
-  CDBSidebarMenuItem,
-} from "cdbreact";
 import { NavLink } from "react-router-dom";
+import classes from "./SideBar.module.css";
+import CreateOutlinedIcon from "@mui/icons-material/CreateOutlined";
+import InboxOutlinedIcon from "@mui/icons-material/InboxOutlined";
 import SendOutlinedIcon from "@mui/icons-material/SendOutlined";
 import { Badge, Col, Row } from "react-bootstrap";
 import SendMail from "./SendMail";
@@ -21,55 +16,47 @@ const Sidebar = () => {
   console.log(filteredEmail);
   console.log(filteredEmail.length);
   return (
-    <div
-      style={{
-        display: "flex",
-        flex: 5,
-        height: "100vh",
-        overflow: "scroll initial",
-      }}
-    >
-      <CDBSidebar textColor="#fff" backgroundColor="#212529">
-        <CDBSidebarHeader prefix={<i className="fa fa-bars fa-large"></i>}>
-          <a
-            href="/"
-            className="text-decoration-none"
-            style={{ color: "inherit" }}
-          >
-            techDot
-          </a>
-        </CDBSidebarHeader>
-        <CDBSidebarContent className="sidebar-content">
-          <CDBSidebarMenu>
-            <NavLink exact to="/inbox" activeClassName="activeClicked">
-              <CDBSidebarMenuItem icon="user">
-                Inbox
-                {<Badge className="m-4" bg="secondary">{unread.length}</Badge>}
-              </CDBSidebarMenuItem>
+    <div className={classes.container}>
+      <div className={classes.sidebar}>
+        <div className={classes.links}>
+          <div className={classes.link}>
+            <NavLink to="/">
+              <div className={classes["link-info"]}>
+                <CreateOutlinedIcon />
+                <span>Compose</span>
+              </div>
             </NavLink>
-            <NavLink exact to="/" activeClassName="activeClicked">
-              <CDBSidebarMenuItem icon="columns">Compose</CDBSidebarMenuItem>
-            </NavLink>
-            <NavLink exact to="/sent" activeClassName="activeClicked">
-              <CDBSidebarMenuItem icon="table">Sent</CDBSidebarMenuItem>
-            </NavLink>
-            <NavLink exact to="/analytics" activeClassName="activeClicked">
-              <CDBSidebarMenuItem icon="chart-line">Draft</CDBSidebarMenuItem>
-            </NavLink>
-          </CDBSidebarMenu>
-        </CDBSidebarContent>
-
-        <CDBSidebarFooter style={{ textAlign: "center" }}>
-          <div
-            className="sidebar-btn-wrapper"
-            style={{
-              padding: "20px 5px",
-            }}
-          >
-            Welcome to techDot
           </div>
-        </CDBSidebarFooter>
-      </CDBSidebar>
+          <div className={classes.link}>
+            <NavLink to="/inbox">
+              <div className={classes["link-info"]}>
+                <InboxOutlinedIcon />
+                <span>Inbox</span>
+                <Badge bg="secondary">{unread.length}</Badge>
+              </div>
+            </NavLink>
+          </div>
+          <div className={classes.link}>
+            <NavLink to="/sent">
+              <div className={classes["link-info"]}>
+                <SendOutlinedIcon />
+                <span>Sent</span>
+              </div>
+            </NavLink>
+          </div>
+          <div className={classes.link}>
+            <NavLink to="/drafts">
+              <div className={classes["link-info"]}>
+                <CreateOutlinedIcon />
+                <span>Drafts</span>
+              </div>
+            </NavLink>
+          </div>
+        </div>
+        <div className={classes.button}>
+          <button>Logout</button>
+        </div>
+      </div>
     </div>
   );
 };

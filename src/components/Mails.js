@@ -20,7 +20,7 @@ const Mails = (props) => {
   };
   console.log(props);
   return (
-    <div className="mt-5">
+    <div>
       <Table striped bordered hover variant="dark">
         <tbody>
           {props.data.map((mail) => (

@@ -25,41 +25,53 @@ function App() {
 
   useEffect(() => {
     dispatch(getData());
+
+    const interval = setInterval(() => {
+      console.log();
+      dispatch(getData());
+    }, 2000);
+    return () => {
+      clearInterval(interval);
+    };
   }, [dispatch]);
-
-  // useEffect(() => {
-  //   dispatch(putData(mails));
-  // }, [dispatch, mails]);
-
   return (
-    <RootLayout>
-      <Switch>
-        <Route path="/" exact>
-          <Home />
-        </Route>
+    <>
+      {false && (
         <Route path="/login">
           <Login />
         </Route>
-        <Route path="/signUp">
-          <Register />
-        </Route>
-        <Route path="/inbox" exact>
-          <Inbox />
-        </Route>
-        <Route path="/inbox/:inboxId">
-          <MailDetails />
-        </Route>
-        <Route path="/sent" exact>
-          <SentMail />
-        </Route>
-        <Route path="/sent/:sendId">
-          <MailDetails />
-        </Route>
-        <Route path="*">
-          <ErrorPage />
-        </Route>
-      </Switch>
-    </RootLayout>
+      )}
+      {/* <Route path="/signUp">
+        <Register />
+      </Route> */}
+      {true && (
+        <RootLayout>
+          <Switch>
+            <Route path="/" exact>
+              <Home />
+            </Route>
+            <Route path="/inbox" exact>
+              <Inbox />
+            </Route>
+            <Route path="/inbox/:inboxId">
+              <MailDetails />
+            </Route>
+            <Route path="/sent" exact>
+              <SentMail />
+            </Route>
+            <Route path="/sent/:sendId">
+              <MailDetails />
+            </Route>
+            <Route path="/drafts">
+              <h1>nothing in Draft</h1>
+            </Route>
+            <Route path="*">
+              <ErrorPage />
+            </Route>
+          </Switch>
+        </RootLayout>
+      )}
+    </>
   );
 }
 

@@ -27,11 +27,6 @@ const SendMail = () => {
   };
   const mailSubmitHandler = async (event) => {
     event.preventDefault();
-    // dispatch(
-    //   mailAction.addToMails({
-    //     ...inputValues,
-    //   })
-    // );
     try {
       const response = await fetch(
         `https://techdot-messenger-default-rtdb.firebaseio.com/mails.json`,
@@ -54,8 +49,8 @@ const SendMail = () => {
   };
 
   return (
-    <Card>
-      <Form className="p-3 border ">
+    <Card className="m-5">
+      <Form className="p-3 border">
         <Form.Group className="mb-3">
           <Form.Control
             onChange={inputValuesHandler}

@@ -1,21 +1,13 @@
 import React from "react";
 import { Container, Nav, Navbar } from "react-bootstrap";
+import { NavLink } from "react-router-dom";
 const NavBar = () => {
   return (
     <div>
       <Navbar bg="dark" variant="dark">
-        <Container>
-          <Navbar.Brand href="#home">Techdot</Navbar.Brand>
-          <Nav className="me-auto">
-            <Nav.Link href="home">Home</Nav.Link>
-            <Nav.Link href="product">Products</Nav.Link>
-            <Nav.Link href="aboutus">About Us</Nav.Link>
-          </Nav>
-          <Nav style={{display:'flex',justifyContent:'flex-end'}}>
-            <Nav.Link href="login">LogIn</Nav.Link>
-            <Nav.Link href="signUp">Sign Up</Nav.Link>
-          </Nav>
-        </Container>
+        <Navbar.Brand className="mx-3" href="/">Techdot</Navbar.Brand>
+        <Nav style={{ display: "flex", justifyContent: "flex-end" }}>
+        </Nav>
       </Navbar>
     </div>
   );

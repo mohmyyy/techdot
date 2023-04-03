@@ -8,15 +8,10 @@ const RootLayout = (props) => {
     <div>
       <NavBar />
       <Row>
-        <Col className="bg-dark" sm={2} md={3} lg={3}>
+        <Col className="bg-dark" sm={2} md={3} lg={2}>
           <Sidebar />
         </Col>
-        <Col
-          className="bg-dark"
-          sm={10}
-          md={8}
-          lg={9}
-        >
+        <Col className="bg-dark" sm={10} md={8} lg={10}>
           {props.children}
         </Col>
       </Row>
