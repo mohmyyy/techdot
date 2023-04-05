@@ -8,6 +8,7 @@ import {
   Modal,
   Row,
 } from "react-bootstrap";
+import { Link } from "react-router-dom";
 
 const Register = () => {
   const [input, setInput] = useState({
@@ -133,7 +134,7 @@ const Register = () => {
               <Card.Body className="text-center">
                 Have an Account?{" "}
                 <span>
-                  <a href="/Login">Login</a>
+                  <Link to="/Login">Login</Link>
                 </span>
               </Card.Body>
             </Card>

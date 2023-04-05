@@ -5,7 +5,7 @@ const NavBar = () => {
   return (
     <div>
       <Navbar bg="dark" variant="dark">
-        <Navbar.Brand className="mx-3" href="/">Techdot</Navbar.Brand>
+        <Navbar.Brand className="mx-3">Techdot</Navbar.Brand>
         <Nav style={{ display: "flex", justifyContent: "flex-end" }}>
         </Nav>
       </Navbar>

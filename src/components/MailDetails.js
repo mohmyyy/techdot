@@ -1,59 +1,86 @@
-import React, { useEffect } from "react";
+import React, { useCallback, useEffect } from "react";
 import { Card } from "react-bootstrap";
 import { useSelector } from "react-redux";
 import { useLocation, useParams } from "react-router-dom";
+import AccountCircleOutlinedIcon from "@mui/icons-material/AccountCircleOutlined";
+import useFetch from "../customHook/useFetch";
 
 const MailDetails = () => {
-  const params = useParams();
-  console.log(params.sendId);
-  console.log(params.inboxId);
-  // const path = params.sendId ? undefined : params.inboxId;
-  let path;
-  if(params.sendId==='undefined'){
-    
-  }
-  console.log(path);
+  const { isLoading, error, sendRequest: updateData } = useFetch();
+  // const { sendRequest: fetcData } = useFetch();
 
+  const params = useParams();
+  let sent = false;
+  let id;
+  if (params.sentId === undefined) {
+    sent = true;
+    id = params.inboxId;
+  } else {
+    id = params.sentId;
+  }
+  console.log(id);
   const mails = useSelector((state) => state.mail.allMails);
   console.log(mails);
-  const mail = mails.find((mail) => mail.key === params.inboxId);
+  const mail = mails.find((mail) => mail.key === id);
   console.log(mail);
 
+  // const getData = (data) => {
+  //   console.log(data);
+  // // };
+  // useEffect(() => {
+  //   const getata = (data) => {
+  //     console.log(data);
+  //   };
+  //   fetcData(
+  //     {
+  //       URL: `https://techdot-messenger-default-rtdb.firebaseio.com/mails/${params.inboxId}.json`,
+  //     },
+  //     getData
+  //   );
+  // });
+
   useEffect(() => {
-    const putFunction = async () => {
-      const response = await fetch(
-        `https://techdot-messenger-default-rtdb.firebaseio.com/mails/${params.inboxId}.json`,
-        {
-          method: "PUT",
-          body: JSON.stringify({
-            from: mail.from,
-            to: mail.to,
-            title: mail.title,
-            body: mail.body,
-            time: mail.time,
-            read: true,
-          }),
-          headers: {
-            "content-type": "application/json",
-          },
-        }
-      );
-      const data = await response.json();
-      console.log(data);
-    };
-    try {
-      putFunction();
-    } catch {}
-  });
+    updateData({
+      URL: `https://techdot-messenger-default-rtdb.firebaseio.com/mails/${params.inboxId}.json`,
+      method: "PUT",
+      body: {
+        from: mail.from,
+        to: mail.to,
+        title: mail.title,
+        body: mail.body,
+        time: mail.time,
+        read: true,
+      },
+      headers: {
+        "Content-Type": "application/json",
+      },
+    });
+  }, []);
 
   return (
     <div>
-      <Card>
-        <Card.Header>To : {mail.from}</Card.Header>
-        <Card.Body>
+      <Card style={{ height: "80vh" }}>
+        <Card.Header>
           <h2>{mail.title}</h2>
-          {mail.body}
-        </Card.Body>
+        </Card.Header>
+        <Card.Header>
+          <div style={{ display: "flex", gap: "10px", alignItems: "center" }}>
+            <AccountCircleOutlinedIcon style={{ fontSize: "40px" }} />
+            {sent && (
+              <div>
+                <h5>{mail.from}</h5>
+                <h6>{mail.to}</h6>
+              </div>
+            )}
+            {!sent && (
+              <div>
+                <h5>{mail.to}</h5>
+                <h6>{mail.from}</h6>
+              </div>
+            )}
+          </div>
+        </Card.Header>
+        <Card.Body className="mw-100 py-4">{mail.body}</Card.Body>
       </Card>
     </div>
   );

@@ -15,36 +15,56 @@ import ErrorPage from "./Pages/ErrorPage";
 import Inbox from "./components/Inbox";
 import MailDetails from "./components/MailDetails";
 import { useDispatch, useSelector } from "react-redux";
-import { getData, putData } from "./redux/redux-mails";
-import { useEffect } from "react";
+import { mailAction } from "./redux/redux-mails";
+import { useCallback, useEffect } from "react";
 import SentMail from "./components/SentMail";
+import useFetch from "./customHook/useFetch";
 
 function App() {
   const dispatch = useDispatch();
-  // const mails = useSelector((state) => state.mail.allMails);
+
+  const isLoggedIn = useSelector((state) => state.auth.isToken);
+
+  const { isLoading, error, sendRequest: fetchTasks } = useFetch();
 
   useEffect(() => {
-    dispatch(getData());
-
+    const transformData = (data) => {
+      const fetchedData = [];
+      for (const keys in data) {
+        const fetchedObj = {
+          key: keys,
+          ...data[keys],
+        };
+        fetchedData.push(fetchedObj);
+      }
+      dispatch(mailAction.replace(fetchedData));
+    };
     const interval = setInterval(() => {
-      console.log();
-      dispatch(getData());
+      // dispatch(getData());
+      fetchTasks(
+        {
+          URL: "https://techdot-messenger-default-rtdb.firebaseio.com/mails.json",
+        },
+        transformData
+      );
     }, 2000);
     return () => {
       clearInterval(interval);
     };
-  }, [dispatch]);
+  }, [fetchTasks, dispatch]);
   return (
     <>
-      {false && (
+      {!isLoggedIn && (
         <Route path="/login">
           <Login />
         </Route>
       )}
-      {/* <Route path="/signUp">
-        <Register />
-      </Route> */}
-      {true && (
+      {!isLoggedIn && (
+        <Route path="/signUp">
+          <Register />
+        </Route>
+      )}
+      {isLoggedIn && (
         <RootLayout>
           <Switch>
             <Route path="/" exact>
@@ -59,11 +79,8 @@ function App() {
             <Route path="/sent" exact>
               <SentMail />
             </Route>
-            <Route path="/sent/:sendId">
+            <Route path="/sent/:sentId">
               <MailDetails />
-            </Route>
-            <Route path="/drafts">
-              <h1>nothing in Draft</h1>
             </Route>
             <Route path="*">
               <ErrorPage />
@@ -71,6 +88,7 @@ function App() {
           </Switch>
         </RootLayout>
       )}
+      {!isLoggedIn && <Redirect to="/login" />}
     </>
   );
 }

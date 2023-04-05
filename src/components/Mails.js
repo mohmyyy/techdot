@@ -1,22 +1,27 @@
 import { Button, Table } from "react-bootstrap";
-import { Link, useLocation } from "react-router-dom";
+import { Link, useHistory, useLocation } from "react-router-dom";
+import useFetch from "../customHook/useFetch";
 
 const Mails = (props) => {
   const location = useLocation();
+  const history = useHistory();
 
   const pathName = location.pathname === "/inbox";
 
+  const { isLoading, error, sendRequest: deleteData } = useFetch();
+
+  const openMailHandler = (mail) => {
+    history.push(`${location.pathname}/${mail.key}`);
+  };
+
   const mailDeleteHandler = async (id) => {
-    const response = await fetch(
-      `https://techdot-messenger-default-rtdb.firebaseio.com/mails/${id}.json`,
-      {
-        method: "Delete",
-        headers: {
-          "content-type": "application/json",
-        },
-      }
-    );
-    // console.log(id);
+    deleteData({
+      URL: `https://techdot-messenger-default-rtdb.firebaseio.com/mails/${id}.json`,
+      method: "DELETE",
+      headers: {
+        "Content-Type": "application/json",
+      },
+    });
   };
   console.log(props);
   return (

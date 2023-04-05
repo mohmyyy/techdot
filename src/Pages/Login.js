@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { Button, Card, Col, Container, Form, Row } from "react-bootstrap";
 import { useDispatch } from "react-redux";
-import { useHistory } from "react-router-dom";
+import { Link, useHistory } from "react-router-dom";
 import { authAction } from "../redux/redux-store";
 
 const Login = () => {
@@ -109,7 +109,7 @@ const Login = () => {
               <Card.Body className="text-center">
                 don't have an Account?{" "}
                 <span>
-                  <a href="/signup">Register</a>
+                  <Link to="/signup">Register</Link>
                 </span>
               </Card.Body>
             </Card>
