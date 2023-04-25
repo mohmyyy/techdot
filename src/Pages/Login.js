@@ -21,7 +21,7 @@ const Login = () => {
     event.preventDefault();
     try {
       const response = await fetch(
-        "https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key=AIzaSyDqf51p2j8MCmXzGVzjWDTqPIRvyMr5KUE",
+        "https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key=AIzaSyDXQEK7j4wRDw7vUHNh5EKlcUcq2NKWe3g",
         {
           method: "POST",
           body: JSON.stringify({

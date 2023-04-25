@@ -32,7 +32,7 @@ const Register = () => {
     setMatch(true);
     try {
       const response = await fetch(
-        "https://identitytoolkit.googleapis.com/v1/accounts:signUp?key=AIzaSyDqf51p2j8MCmXzGVzjWDTqPIRvyMr5KUE",
+        "https://identitytoolkit.googleapis.com/v1/accounts:signUp?key=AIzaSyDXQEK7j4wRDw7vUHNh5EKlcUcq2NKWe3g",
         {
           method: "POST",
           body: JSON.stringify({
@@ -47,11 +47,11 @@ const Register = () => {
       );
 
       if (!response.ok) {
-        throw new Error('Authentication Failed');
+        throw new Error("Authentication Failed");
       }
-      console.log('Successfully signed up')
+      console.log("Successfully signed up");
     } catch (error) {
-      alert(error)
+      alert(error);
     }
   };
   return (
@@ -96,7 +96,10 @@ const Register = () => {
                       <Form.Label className="text-left">Password</Form.Label>
                     </Form.FloatingLabel>
                   </Form.Group>
-                  <Form.Group className="mx-2" controlId="formBasicConfirmPassword">
+                  <Form.Group
+                    className="mx-2"
+                    controlId="formBasicConfirmPassword"
+                  >
                     <Form.FloatingLabel className="form-floating form-floating-sm">
                       <Form.Control
                         className="form-control "

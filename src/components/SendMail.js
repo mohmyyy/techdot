@@ -28,45 +28,33 @@ const SendMail = () => {
   };
 
   const mailSubmitHandler = async (event) => {
-    // const postingData = (data) => {
-    //   console.log(data);
-    // };
-
-    event.preventDefault();
-    updateData(
-      {
-        URL: `https://techdot-messenger-default-rtdb.firebaseio.com/mails.json`,
-        method: "POST",
-        body: {
-          ...inputValues,
+    dispatch(
+      mailAction.addMail({
+        mail: {
+          to: inputValues.to,
+          body: inputValues.body,
+          title: inputValues.title,
           from: email,
           time: `${time.getHours()}/${time.getMinutes()}/${time.getSeconds()}`,
           read: false,
         },
-        headers: {
-          "content-type": "application/json",
-        },
-      },
+      })
     );
-    // try {
-    //   const response = await fetch(
-    //     `https://techdot-messenger-default-rtdb.firebaseio.com/mails.json`,
-    //     {
-    //       method: "POST",
-    //       body: JSON.stringify({
-    //         ...inputValues,
-    //         from: email,
-    //         time: `${time.getHours()}/${time.getMinutes()}/${time.getSeconds()}`,
-    //         read: false,
-    //       }),
-    //       headers: {
-    //         "content-type": "application/json",
-    //       },
-    //     }
-    //   );
-    //   const data = await response.json();
-    //   console.log(data);
-    // } catch {}
+    updateData({
+      URL: `https://techd0t-default-rtdb.firebaseio.com/mails.json`,
+      method: "POST",
+      body: {
+        to: inputValues.to,
+        body: inputValues.body,
+        title: inputValues.title,
+        from: email,
+        time: `${time.getHours()}/${time.getMinutes()}/${time.getSeconds()}`,
+        read: false,
+      },
+      headers: {
+        "content-type": "application/json",
+      },
+    });
     setInputValues({ to: "", title: "", body: "" });
   };
 

@@ -1,22 +1,48 @@
 import { Button, Table } from "react-bootstrap";
-import { Link, useHistory, useLocation } from "react-router-dom";
+import { Link, useHistory, useLocation, useParams } from "react-router-dom";
 import useFetch from "../customHook/useFetch";
+import { useDispatch } from "react-redux";
+import { mailAction } from "../redux/redux-mails";
 
 const Mails = (props) => {
   const location = useLocation();
   const history = useHistory();
+  const dispatch = useDispatch();
 
   const pathName = location.pathname === "/inbox";
 
   const { isLoading, error, sendRequest: deleteData } = useFetch();
+  const { sendRequest: updateData } = useFetch();
 
   const openMailHandler = (mail) => {
     history.push(`${location.pathname}/${mail.key}`);
+    dispatch(mailAction.mail(mail));
+    console.log(mail);
+    console.log(location.pathname);
+    if (location.pathname === "/inbox") {
+      dispatch(mailAction.readMail({ id: mail.key }));
+      updateData({
+        URL: `https://techd0t-default-rtdb.firebaseio.com/mails/${mail.key}.json`,
+        method: "PUT",
+        body: {
+          from: mail.from,
+          to: mail.to,
+          title: mail.title,
+          body: mail.body,
+          time: mail.time,
+          read: true,
+        },
+        headers: {
+          "Content-Type": "application/json",
+        },
+      });
+    }
   };
 
   const mailDeleteHandler = async (id) => {
+    dispatch(mailAction.deleteMail({ id: id }));
     deleteData({
-      URL: `https://techdot-messenger-default-rtdb.firebaseio.com/mails/${id}.json`,
+      URL: `https://techd0t-default-rtdb.firebaseio.com/mails/${id}.json`,
       method: "DELETE",
       headers: {
         "Content-Type": "application/json",
@@ -44,13 +70,8 @@ const Mails = (props) => {
                 )}
               </td>
 
-              <td>
-                <Link
-                  style={{ textDecoration: "none", color: "white" }}
-                  to={pathName ? `/inbox/${mail.key}` : `/sent/${mail.key}`}
-                >
-                  {pathName ? mail.from : mail.to}
-                </Link>
+              <td onClick={() => openMailHandler(mail)}>
+                {pathName ? mail.from : mail.to}
               </td>
 
               <td>{mail.title}</td>
